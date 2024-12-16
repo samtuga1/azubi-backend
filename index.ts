@@ -1,8 +1,9 @@
 import EnvConstants from "./constants/env.constants";
 import { DBCONNECT } from "./database";
-import { server } from "./server";
+import CreateServer from "./server";
 
 const PORT = EnvConstants.PORT;
+const server = CreateServer();
 
 DBCONNECT(() => {
   server.listen(PORT, async () => {

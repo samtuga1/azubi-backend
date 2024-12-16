@@ -1,29 +1,39 @@
-// server.ts (or wherever you initialize your app)
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+
 import { ErrorHandler, NotFoundErrorHandler } from "./handlers";
 import path from "path";
+
 import ROUTES from "./routes";
 
-dotenv.config();
+declare module "express-serve-static-core" {
+  interface Request {
+    media: string | null;
+  }
+}
 
-const app = express();
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: false, origin: true, preflightContinue: true }));
-app.use(express.static(path.join(__dirname, "public")));
+const CreateServer = (): express.Application => {
+  dotenv.config();
 
-// Routes
-app.use(`/api/v1`, ROUTES);
+  // init APP
+  const APP = express();
+  APP.use(cookieParser());
+  APP.use(express.json());
+  APP.use(express.urlencoded({ extended: true }));
+  APP.use(cors({ credentials: false, origin: true, preflightContinue: true }));
+  APP.use(express.static(path.join(__dirname, "public")));
 
-// Error Handler middleware
-app.use(ErrorHandler);
-app.use(NotFoundErrorHandler);
+  // Routes
+  APP.use(`/api/v1`, ROUTES);
 
-const server = app;
+  // Error Handler middleware
+  APP.use(ErrorHandler);
 
-export default app;
-export { server };
+  APP.use(NotFoundErrorHandler);
+
+  return APP;
+};
+
+export default CreateServer;
