@@ -1,6 +1,8 @@
 import request from "supertest";
-import app, { server } from "../server"; // Import the app
+import app from "../server"; // Import the app
 import prisma from "../prisma/prisma";
+
+const server = app.listen(3001);
 
 describe("Product Endpoints", () => {
   it("should fetch a single product by ID", async () => {
