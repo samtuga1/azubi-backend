@@ -1,0 +1,12 @@
+model Product {
+    id          Int        @id @default(autoincrement())
+    title       String
+    description String?
+    price       Decimal    @default(0) @db.Decimal(19, 2)
+    photo       String?
+    cartItems   CartItem[]
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+
+    @@index([title])
+}
