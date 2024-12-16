@@ -23,10 +23,7 @@ app.use(`/api/v1`, ROUTES);
 app.use(ErrorHandler);
 app.use(NotFoundErrorHandler);
 
-// Export the app as a function, and add server.listen for the app to be ready
-const server = app.listen(process.env.PORT || 3001, () => {
-  console.log("Server is running...");
-});
+const server = app;
 
-export default app; // Export the app for use in supertest
-export { server }; // Export the running server for shutdown in tests
+export default app;
+export { server };
