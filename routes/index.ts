@@ -10,7 +10,7 @@ router.use("/cart", CART_MODULE);
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.status(200).json({
-      message: "Welcome to TWiST API",
+      message: "Welcome to AZUBI API",
     });
   } catch (error) {
     next(error);
