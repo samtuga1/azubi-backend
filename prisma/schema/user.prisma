@@ -2,8 +2,15 @@ model User {
     id        Int      @id @default(autoincrement())
     username  String
     password  String
+    channel   String?
+    userType  UserType @default(normal)
     createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
     updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
 
     @@map("users")
+}
+
+enum UserType {
+    normal
+    bot
 }

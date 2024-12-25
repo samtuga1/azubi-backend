@@ -1,0 +1,8 @@
+model Module {
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String
+    cakes       Cake[]
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}

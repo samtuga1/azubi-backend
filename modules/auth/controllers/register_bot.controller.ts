@@ -4,28 +4,35 @@ import ResponseHandler from "../../../handlers/response.handler";
 import AccountService from "../../account/service";
 import ApiError from "../../../utils/api_error";
 import { HttpStatus } from "../../../utils/http_status";
-export default async function RegisterUser(
+import { generateRandomFilename } from "../../../utils/functions";
+
+export default async function RegisterBot(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
     // get request payload
-    const { username, password } = req.body;
+    const { username, channel } = req.body;
 
-    const exists = await AccountService.checkExistense(username);
+    const password = generateRandomFilename();
+
+    console.log(password);
+
+    const exists = await AccountService.checkExistingBot(username);
 
     if (exists) {
-      throw new ApiError(
-        "Username is associated with another account",
-        HttpStatus.Conflict
-      );
+      const user = await AccountService.findByChannel(username);
+      return new ResponseHandler(res).successWithData({
+        user,
+      });
     }
 
     const user = await UserAuthService.register({
       username,
       password,
-      userType: "normal",
+      channel,
+      userType: "bot",
     });
 
     new ResponseHandler(res).successWithData({

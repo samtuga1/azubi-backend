@@ -1,0 +1,16 @@
+model Cake {
+    id          Int             @id @default(autoincrement())
+    content     String
+    contentType CakeContentType
+    instruction String?
+    module      Module          @relation(fields: [moduleId], references: [id])
+    moduleId    Int
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @updatedAt
+}
+
+enum CakeContentType {
+    text
+    image
+    audio
+}

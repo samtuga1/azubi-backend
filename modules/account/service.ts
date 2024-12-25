@@ -36,11 +36,40 @@ export default class AccountService {
     }
   }
 
+  static async findByChannel(channel: string) {
+    try {
+      return await prisma.user.findFirst({
+        where: {
+          channel,
+        },
+        omit: {
+          password: true,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async checkExistense(username: string) {
     try {
       const exists = await prisma.user.findFirst({
         where: {
           username,
+        },
+      });
+
+      return !!exists;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async checkExistingBot(channel: string) {
+    try {
+      const exists = await prisma.user.findFirst({
+        where: {
+          channel,
         },
       });
 
