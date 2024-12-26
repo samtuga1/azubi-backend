@@ -16,7 +16,7 @@ router.use("/cake", CAKES_MODULE);
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.status(200).json({
-      message: "Welcome to AZUBI API",
+      message: "Welcome to PRODIGAL API",
     });
   } catch (error) {
     next(error);
